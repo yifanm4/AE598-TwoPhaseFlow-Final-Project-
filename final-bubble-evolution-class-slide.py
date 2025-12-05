@@ -34,11 +34,13 @@ p_g0 = p0 + 2.0 * sigma / R0 - p_v
 # -----------------------------
 def p_infinity(t):
     """Far-field pressure (sinusoidal)."""
-    return p0 + Pa * np.sin(omega * t)
+    return p0 - Pa * np.sin(omega * t)
+    #return p0 + Pa * np.sin(omega * t)
 
 def dp_infinity_dt(t):
     """Time derivative of far-field pressure."""
-    return Pa * omega * np.cos(omega * t)
+    return -Pa * omega * np.cos(omega * t)
+    #return Pa * omega * np.cos(omega * t)
 
 def p_bubble(R):
     """Bubble internal pressure (gas + vapor) via polytropic gas law."""
