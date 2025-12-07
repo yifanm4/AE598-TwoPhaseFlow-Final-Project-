@@ -27,6 +27,7 @@ tR = 0.915 * R0 * np.sqrt(rho / (p_inf - p_g0))
 # Sound speed for Keller-Miksis (Approximation for "slightly compressible")
 # High enough to be stable, finite for KM physics
 c_liquid = 10.0 * np.sqrt((p_inf - p_g0)/rho)
+print(f"{c_liquid}: Sound speed used in Keller-Miksis equation")
 
 # ==========================================
 # 2. Solver Functions (RP and KM)
@@ -72,6 +73,7 @@ def model_derivatives(t, y, mu_val, model_type='RP'):
 # ==========================================
 t_span = [0, 2.5 * tR]
 t_eval = np.linspace(0, 2.5 * tR, 1000)
+#t_eval = np.linspace(0, 2.5 * tR, 1000)
 y0 = [R0, 0.0] # Initial conditions: R=R0, Velocity=0
 
 # Case A: Inviscid (mu=0)
@@ -107,7 +109,8 @@ plt.show()
 plt.figure(figsize=(6, 5))
 plt.plot(sol_rp_vis.t/tR, sol_rp_vis.y[0]/R0, 'g-', label='Rayleigh-Plesset')
 plt.plot(sol_km_vis.t/tR, sol_km_vis.y[0]/R0, 'y-', label='Keller-Miksis')
-# Add faint inviscid KM line for reference (as done in PDF)
+# Add faint inviscid KM line for reference (as done in PDF)'
+plt.plot(sol_rp_inv.t/tR, sol_rp_inv.y[0]/R0, 'r:', alpha=0.5,label='RP (Inviscous)')
 plt.plot(sol_km_inv.t/tR, sol_km_inv.y[0]/R0, 'b:', alpha=0.5, label='KM (Inviscid Ref)')
 plt.title('Viscous Fluid: Radius vs Time')
 plt.xlabel('t / tR')
@@ -149,7 +152,7 @@ for i in t_indices:
 
 ax.set_xlim(0, 1.1)
 ax.set_ylim(0, 1.1)
-ax.set_title('Interfaces (Bubble Shape Evolution)')
+ax.set_title('KM Viscous Fluid: Bubble Interfaces (Bubble Shape Evolution)')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 plt.tight_layout()
